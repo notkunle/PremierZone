@@ -34,5 +34,32 @@ public class PlayerService {
     }
 
 
+    public List<Player> getPlayersByNation(String searchText) {
+        return playerRepository.findAll().stream().filter(player -> player.getNation().toLowerCase().contains(searchText.toLowerCase())).collect(Collectors.toList());
+    }
 
+    public List<Player> getPlayersByTeamAndPosition(String team, String pos) {
+        return playerRepository.findAll().stream().filter(player -> team.equals(player.getTeam()) && player.getPos().equals(pos)).collect(Collectors.toList());
+    }
+
+    public Player addPlayer(Player player) {
+       playerRepository.save(player);
+       return player;
+
+    }
+
+    public Player updatePlayer(Player updatedPlayer) {
+        Optional<Player> existingPlayer = playerRepository.findByName(updatedPlayer.getName());
+        playerRepository.save(updatedPlayer);
+
+        if(existingPlayer.isPresent()) {
+            Player playerToUpdate = existingPlayer.get();
+            playerToUpdate.setName(updatedPlayer.getName());
+            playerToUpdate.setTeam(updatedPlayer.getTeam());
+            playerToUpdate.setPos(updatedPlayer.getPos());
+            playerToUpdate.setNation(updatedPlayer.getNation());
+
+            playerRepository.save(playerToUpdate);
+        }
+    }
 }
