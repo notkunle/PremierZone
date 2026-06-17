@@ -60,6 +60,8 @@ public class PlayerService {
             playerToUpdate.setNation(updatedPlayer.getNation());
 
             playerRepository.save(playerToUpdate);
+            return playerToUpdate;
         }
+        return null;
     }
 }
