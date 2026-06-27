@@ -36,8 +36,8 @@ public class playerController {
             return playerService.getPlayersByPosition(position);
         } else if (nation != null){
             return playerService.getPlayersByNation(nation);
+        } else{
+            return playerService.getPlayers();
         }
-
-        return null;
     }
 }
